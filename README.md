@@ -3,7 +3,7 @@
 <br />
 <p align="center">
   <h3 align="center">myRead Web App</h3>
-    ![Screenshot 2021-06-27 at 19 09 15](https://user-images.githubusercontent.com/26861798/123555046-2c5a5980-d77b-11eb-821f-c1376cd48055.png)
+   
 
   <p align="center">
     An simple ReactJS Book library web app that helps users to move books between shelves of their Library, add new books efficiently.
@@ -13,7 +13,7 @@
   </p>
 </p>
 
-
+ ![Screenshot 2021-06-27 at 19 09 15](https://user-images.githubusercontent.com/26861798/123555046-2c5a5980-d77b-11eb-821f-c1376cd48055.png)
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
