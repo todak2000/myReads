@@ -9,7 +9,7 @@
     An simple ReactJS Book library web app that helps users to move books between shelves of their Library, add new books efficiently.
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://equal-scarce-bull.glitch.me/">View Demo</a>
   </p>
 </p>
 
