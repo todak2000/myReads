@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 
 class Category extends Component{
-    updateBook = event => {
-    event.preventDefault();
-    this.props.onUpdateBook(this.state.message, this.props.chatBoxUser);
-  };
     render(){
       const {books, onUpdateBook} = this.props;
         return (
@@ -27,7 +23,7 @@ class Category extends Component{
                        <div className="book-shelf-changer">
                           <select onChange={(e)=>onUpdateBook(currentlyReading.id, e.target.value)} >
                              <option value="move" disabled>Move to...</option>
-                             <option value="move"></option>
+                             <option value={currentlyReading.shelf}>Currently Reading</option>
                              <option value="wantToRead">Want to Read</option>
                               <option value="read">Read</option>
                               <option value="none">None</option>
@@ -60,7 +56,7 @@ class Category extends Component{
                        <div className="book-shelf-changer">
                           <select onChange={(e)=>onUpdateBook(wantToRead.id, e.target.value)} >
                              <option value="move" disabled>Move to...</option>
-                           	 <option value="move"></option>
+                             <option value={wantToRead.shelf}>Want to Read</option>
                              <option value="currentlyReading">Currently Reading</option>
                               <option value="read">Read</option>
                               <option value="none">None</option>
@@ -93,7 +89,7 @@ class Category extends Component{
                        <div className="book-shelf-changer">
                           <select onChange={(e)=>onUpdateBook(read.id, e.target.value)} >
                              <option value="move" disabled>Move to...</option>
-                             <option value="move"></option>
+                             <option value={read.shelf}>Read</option>
                              <option value="currentlyReading">Currently Reading</option>
                              <option value="wantToRead">Want to Read</option>
                               

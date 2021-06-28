@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import * as BooksAPI from './BooksAPI'
-
+import * as BooksAPI from './BooksAPI';
+const placeholder = 'https://via.placeholder.com/150';
 const maxResults = 20;
 
 class Search extends Component{
@@ -16,9 +16,16 @@ class Search extends Component{
         }))
     	console.log(this.state.query)
     	BooksAPI.search(this.state.query, maxResults).then((queryBooks)=>{
-      		this.setState(()=>({
-        	searchBooks:queryBooks
-      	}))
+        if (queryBooks.error){
+          this.setState(()=>({
+            query:''
+          }))
+        }
+      	else{
+          this.setState(()=>({
+            searchBooks:queryBooks
+          }))
+        }
       	console.log(this.state.searchBooks)
       })
     } 
@@ -39,7 +46,7 @@ class Search extends Component{
   }
 
     render(){
-        const {searchBooks} = this.state;
+        const {query, searchBooks} = this.state;
         return (
            <div className="search-books">
             <div className="search-books-bar">
@@ -51,24 +58,22 @@ class Search extends Component{
                 <input 
           			type="text" 
           			placeholder="Search by title or author"
-          			value={this.state.query}
-                    onChange={(e)=>this.searchs(e.target.value)}
+                 onChange={(e)=>this.searchs(e.target.value)}
           		/>
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-				      {
-                  searchBooks ==='' ? null : 
+				      {   query === '' ? <p>No Result</p> :
                   searchBooks.map((book)=>(
                   <li key={Math.random(1000)}>
                      <div className="book">
                         <div className="book-top">
                           <div className="book-cover" 
-                               style={{ 
-                               width: 128, 
+                                style={{ 
+                                width: 128, 
                                 height: 193, 
-                                backgroundImage: `url(${book.imageLinks.thumbnail})`
+                                backgroundImage:`url(${book.imageLinks.thumbnail === null || '' ? placeholder : book.imageLinks.thumbnail})`
                          }}>
                          </div>
                        <div className="book-shelf-changer">
@@ -80,11 +85,11 @@ class Search extends Component{
                             book.imageLinks.thumbnail 
                           )} >
                              <option value="move" disabled>Move to...</option>
-                             <option value="move"></option>
+                             <option value={book.shelf}>{book.shelf || "None"}</option>
                              <option value="currentlyReading">Currently Reading</option>
                              <option value="wantToRead">Want to Read</option>
                               <option value="read">Read</option>
-                              <option value="none">None</option>
+                              {/* <option value="none">None</option> */}
                           </select>
                         </div>
                       </div>
