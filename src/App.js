@@ -11,24 +11,20 @@ class BooksApp extends React.Component {
     books: [],
   };
 
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      this.setState(() => ({
-        books,
-      }));
-      console.log(books);
-    });
+  async componentDidMount() {
+    const books = await BooksAPI.getAll();
+    this.setState({ books });
+    console.log(books);
   }
 
   addBook = (id, title, shelf, authors, imageURL) => {
-    const newBook= {
+    const newBook = {
       id: id,
       title: title,
       authors: authors,
       imageLinks: { thumbnail: imageURL },
-    } ;
+    };
     this.setState((prevState) => ({
-      // books: prevState.books.concat([newBook])
       books: [
         ...prevState.books,
         {
@@ -40,13 +36,12 @@ class BooksApp extends React.Component {
         },
       ],
     }));
-    
+
     BooksAPI.update(newBook, shelf).then((books) => {
       console.log(books);
     });
     console.log(this.state.books);
     return newBook;
-    
   };
 
   updateBook = (bookID, newShelf) => {
