@@ -14,34 +14,43 @@ class BooksApp extends React.Component {
   async componentDidMount() {
     const books = await BooksAPI.getAll();
     this.setState({ books });
-    console.log(books);
   }
 
   addBook = (id, title, shelf, authors, imageURL) => {
-    const newBook = {
-      id: id,
-      title: title,
-      authors: authors,
-      imageLinks: { thumbnail: imageURL },
-    };
-    this.setState((prevState) => ({
-      books: [
-        ...prevState.books,
-        {
-          id: id,
-          title: title,
-          shelf: shelf,
-          authors: authors,
-          imageLinks: { thumbnail: imageURL },
-        },
-      ],
-    }));
-
-    BooksAPI.update(newBook, shelf).then((books) => {
-      console.log(books);
+    const filteredBook = this.state.books.filter((book) => {
+      return book.id === id;
     });
-    console.log(this.state.books);
-    return newBook;
+
+    if (filteredBook) {
+      if (filteredBook.shelf !== shelf) {
+        this.updateBook(id, shelf);
+      }
+    }
+    if (filteredBook.length === 0) {
+      const newBook = {
+        id: id,
+        title: title,
+        authors: authors,
+        imageLinks: { thumbnail: imageURL },
+      };
+      this.setState((prevState) => ({
+        books: [
+          ...prevState.books,
+          {
+            id: id,
+            title: title,
+            shelf: shelf,
+            authors: authors,
+            imageLinks: { thumbnail: imageURL },
+          },
+        ],
+      }));
+
+      BooksAPI.update(newBook, shelf).then((books) => {
+        console.log(books);
+      });
+      return newBook;
+    }
   };
 
   updateBook = (bookID, newShelf) => {
@@ -64,13 +73,9 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Switch>
-          <Route
-            path="/search"
-            render={() => (
-              <Search mybooks={this.state.books} onAddBook={this.addBook} />
-            )}
-          />
-
+          <Route path="/search">
+            <Search mybooks={this.state.books} onAddBook={this.addBook} />
+          </Route>
           <Route
             path="/"
             render={() => (

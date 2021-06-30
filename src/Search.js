@@ -6,26 +6,23 @@ const maxResults = 20;
 
 class Search extends Component {
   state = {
-    query: "",
     searchBooks: [],
-    exisitingBooks: [],
   };
 
   searchs = (q) => {
-    this.setState(() => ({
-      query: q,
-    }));
-    BooksAPI.search(this.state.query, maxResults).then((queryBooks) => {
-      console.log(queryBooks);
+    BooksAPI.search(q, maxResults).then((queryBooks) => {
       if (queryBooks === null || "") {
         this.setState(() => ({
-          query: "",
+          searchBooks: [],
+        }));
+      }
+      if (queryBooks.error) {
+        this.setState(() => ({
           searchBooks: [],
         }));
       } else {
         this.setState(() => ({
           searchBooks: queryBooks,
-          exisitingBooks: this.props.mybooks,
         }));
       }
     });
@@ -43,7 +40,8 @@ class Search extends Component {
   };
 
   render() {
-    const { query, searchBooks, exisitingBooks } = this.state;
+    const { searchBooks } = this.state;
+    const { mybooks } = this.props;
     const options = (shelf) => {
       if (shelf === "currentlyReading") {
         return "Currently Reading";
@@ -71,11 +69,11 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {query === "" ? (
+            {searchBooks.length === 0 ? (
               <p>No Result</p>
             ) : (
               searchBooks.map((book) => (
-                <li key={Math.random(1000)}>
+                <li key={book.id}>
                   <div className="book">
                     <div className="book-top">
                       <div
@@ -105,7 +103,7 @@ class Search extends Component {
                           <option value="move" disabled>
                             Move to...
                           </option>
-                          {exisitingBooks.map(
+                          {mybooks.map(
                             (existingbook) =>
                               existingbook.id === book.id && (
                                 <option value={existingbook.shelf}>
@@ -114,7 +112,9 @@ class Search extends Component {
                               )
                           )}
                           <option value="none">None</option>
-                          <option value="currentlyReading">Currently Reading</option>
+                          <option value="currentlyReading">
+                            Currently Reading
+                          </option>
                           <option value="wantToRead">Want to Read</option>
                           <option value="read">Read</option>
                         </select>

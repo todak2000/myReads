@@ -12,7 +12,7 @@ class Category extends Component {
               {books
                 .filter((book) => book.shelf === "currentlyReading")
                 .map((currentlyReading) => (
-                  <li key={Math.random(1000)}>
+                  <li key={currentlyReading.id}>
                     <div className="book">
                       <div className="book-top">
                         <div
@@ -58,7 +58,7 @@ class Category extends Component {
               {books
                 .filter((book) => book.shelf === "wantToRead")
                 .map((wantToRead) => (
-                  <li key={Math.random(1000)}>
+                  <li key={wantToRead.id}>
                     <div className="book">
                       <div className="book-top">
                         <div
@@ -104,7 +104,7 @@ class Category extends Component {
               {books
                 .filter((book) => book.shelf === "read")
                 .map((read) => (
-                  <li key={Math.random(1000)}>
+                  <li key={read.id}>
                     <div className="book">
                       <div className="book-top">
                         <div
