@@ -11,12 +11,17 @@ class Search extends Component {
 
   searchs = (q) => {
     BooksAPI.search(q, maxResults).then((queryBooks) => {
-      if (queryBooks === null || "") {
+      if (typeof queryBooks === 'undefined'){
+        this.setState(() => ({
+          searchBooks: [],
+        }));
+        }
+      if (queryBooks.error) {
         this.setState(() => ({
           searchBooks: [],
         }));
       }
-      if (queryBooks.error) {
+      if (queryBooks === null || "") {
         this.setState(() => ({
           searchBooks: [],
         }));
@@ -42,6 +47,7 @@ class Search extends Component {
   render() {
     const { searchBooks } = this.state;
     const { mybooks } = this.props;
+
     const options = (shelf) => {
       if (shelf === "currentlyReading") {
         return "Currently Reading";
@@ -49,10 +55,11 @@ class Search extends Component {
       if (shelf === "wantToRead") {
         return "Want to Read";
       }
-      if (shelf === "reading") {
-        return "Reading";
+      if (shelf === "read") {
+        return "Read";
       }
     };
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -96,7 +103,9 @@ class Search extends Component {
                               book.title,
                               e.target.value,
                               book.authors,
-                              book.imageLinks.thumbnail
+                              book.imageLinks
+                              ? book.imageLinks.thumbnail
+                              : placeholder
                             )
                           }
                         >
@@ -106,15 +115,13 @@ class Search extends Component {
                           {mybooks.map(
                             (existingbook) =>
                               existingbook.id === book.id && (
-                                <option value={existingbook.shelf}>
+                                <option value={existingbook.shelf} key={existingbook.id}>
                                   {options(existingbook.shelf)}
-                                </option>
+                                </option> 
                               )
                           )}
                           <option value="none">None</option>
-                          <option value="currentlyReading">
-                            Currently Reading
-                          </option>
+                          <option value="currentlyReading">Currently Reading</option>
                           <option value="wantToRead">Want to Read</option>
                           <option value="read">Read</option>
                         </select>

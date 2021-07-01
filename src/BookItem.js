@@ -1,8 +1,7 @@
 import React from "react";
+const placeholder = "https://via.placeholder.com/150";
 
 function BookItem(props) {
-  // const { books, onUpdateBook } = this.props;
-  console.log(props.bookCategory);
   return (
     <li key={props.bookCategory.id}>
       <div className="book">
@@ -12,7 +11,12 @@ function BookItem(props) {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${props.bookCategory.imageLinks.thumbnail})`,
+              backgroundImage: `url(${
+                props.bookCategory.imageLinks
+                  ? props.bookCategory.imageLinks.thumbnail
+                  : placeholder
+              })`
+              // backgroundImage: `url(${props.bookCategory.imageLinks.thumbnail})`,
             }}
           ></div>
           <div className="book-shelf-changer">
