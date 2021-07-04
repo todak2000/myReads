@@ -16,16 +16,6 @@ class Search extends Component {
           searchBooks: [],
         }));
       }
-      // if (queryBooks.error) {
-      //   this.setState(() => ({
-      //     searchBooks: [],
-      //   }));
-      // }
-      // if (queryBooks === null || "") {
-      //   this.setState(() => ({
-      //     searchBooks: [],
-      //   }));
-      // } 
       else {
         this.setState(() => ({
           searchBooks: queryBooks,
