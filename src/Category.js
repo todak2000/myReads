@@ -14,7 +14,8 @@ class Category extends Component {
               {books
                 .filter((book) => book.shelf === "currentlyReading")
                 .map((currentlyReading) => (
-                  <BookItem 
+                  <BookItem
+                    key={currentlyReading.id} 
                     bookCategory={currentlyReading}
                     onUpdateBook={onUpdateBook}
                     selectedOption="Currently Reading"
@@ -31,6 +32,7 @@ class Category extends Component {
                 .filter((book) => book.shelf === "wantToRead")
                 .map((wantToRead) => (
                   <BookItem 
+                    key={wantToRead.id} 
                     bookCategory={wantToRead}
                     onUpdateBook={onUpdateBook}
                     selectedOption="Want to Read"
@@ -47,6 +49,7 @@ class Category extends Component {
                 .filter((book) => book.shelf === "read")
                 .map((read) => (
                   <BookItem 
+                    key={read.id} 
                     bookCategory={read}
                     onUpdateBook={onUpdateBook}
                     selectedOption="Read"

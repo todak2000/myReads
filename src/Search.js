@@ -11,21 +11,22 @@ class Search extends Component {
 
   searchs = (q) => {
     BooksAPI.search(q, maxResults).then((queryBooks) => {
-      if (typeof queryBooks === 'undefined'){
-        this.setState(() => ({
-          searchBooks: [],
-        }));
-        }
-      if (queryBooks.error) {
+      if (typeof queryBooks === 'undefined' || queryBooks.error || queryBooks === null || queryBooks === ""){
         this.setState(() => ({
           searchBooks: [],
         }));
       }
-      if (queryBooks === null || "") {
-        this.setState(() => ({
-          searchBooks: [],
-        }));
-      } else {
+      // if (queryBooks.error) {
+      //   this.setState(() => ({
+      //     searchBooks: [],
+      //   }));
+      // }
+      // if (queryBooks === null || "") {
+      //   this.setState(() => ({
+      //     searchBooks: [],
+      //   }));
+      // } 
+      else {
         this.setState(() => ({
           searchBooks: queryBooks,
         }));

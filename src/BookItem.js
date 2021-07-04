@@ -16,7 +16,6 @@ function BookItem(props) {
                   ? props.bookCategory.imageLinks.thumbnail
                   : placeholder
               })`
-              // backgroundImage: `url(${props.bookCategory.imageLinks.thumbnail})`,
             }}
           ></div>
           <div className="book-shelf-changer">
